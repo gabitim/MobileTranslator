@@ -1,8 +1,7 @@
 import React from 'react';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
-import AddProductScreen from './src/add-product-screen';
 import HomeScreen from './src/home-screen';
 import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -32,25 +31,7 @@ const App: () => React$Node = () => {
                   />
                 </View>
               ),
-              headerRight: () => (
-                <TouchableOpacity
-                  style={styles.addButton}
-                  onPress={() => navigation.navigate('AddProduct')}>
-                  <Icon name={'plus'} size={20} color="#000000" />
-                </TouchableOpacity>
-              ),
             })}
-          />
-          <Stack.Screen
-            name="AddProduct"
-            buttonStyle={styles.addButton}
-            component={AddProductScreen}
-            options={{
-              title: 'Add Product',
-              headerStyle: {
-                backgroundColor: '#ff9300',
-              },
-            }}
           />
         </Stack.Navigator>
       </NavigationContainer>
