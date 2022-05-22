@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/translate": {
+      "name": "/translate",
+      "lambdaFunction": "TextExtractionAndTranslatingLambda",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

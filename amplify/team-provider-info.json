@@ -14,6 +14,12 @@
     "categories": {
       "auth": {
         "translatorf1e78fcd": {}
+      },
+      "function": {
+        "TextExtractionAndTranslatingLambda": {
+          "deploymentBucketName": "amplify-translator-dev-161213-deployment",
+          "s3Key": "amplify-builds/TextExtractionAndTranslatingLambda-33663762734a68353858-build.zip"
+        }
       }
     }
   }
