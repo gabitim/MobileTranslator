@@ -14,6 +14,7 @@ import {API, Auth, Storage} from 'aws-amplify';
 import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
 
 import ImageUploader from './components/image-uploader';
+import LanguageSelector from './components/language-selector';
 
 const myAPI = 'api0a629dfb';
 const path = '/translate';
@@ -21,6 +22,7 @@ const path = '/translate';
 const HomeScreen = () => {
 
   const [photo, setPhoto] = useState(null);
+  const [language, setLanguage] = useState('');
   const [loading, setLoading] = useState(false);
   const [output, setOutput] = useState('');
 
@@ -60,6 +62,8 @@ const HomeScreen = () => {
 
       const body = {
         filePath: filePath,
+        ocrOption: 'Textract',
+        language: language,
       };
       console.log(body);
 
@@ -89,6 +93,9 @@ const HomeScreen = () => {
           handleCameraPhoto={handleCameraPhoto}
           photo={photo}
         />
+        <View style={styles.space} />
+
+        <LanguageSelector setLanguage={setLanguage} />
         <View style={styles.space} />
 
         <Button title="Upload and initiate" onPress={handleUploadAndInitiate} />
