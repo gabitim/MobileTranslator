@@ -5,7 +5,11 @@
       "name": "/translate",
       "lambdaFunction": "TextExtractionAndTranslatingLambda",
       "permissions": {
-        "setting": "open"
+        "setting": "private",
+        "auth": [
+          "create",
+          "read"
+        ]
       }
     }
   }

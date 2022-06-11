@@ -9,7 +9,8 @@
       "UnauthRoleName": "amplify-translator-dev-161213-unauthRole",
       "StackName": "amplify-translator-dev-161213",
       "StackId": "arn:aws:cloudformation:us-east-1:230439540937:stack/amplify-translator-dev-161213/23cb0770-d6ac-11ec-88f9-0eb0af78ec0f",
-      "AmplifyAppId": "d1zetc41fpdwem"
+      "AmplifyAppId": "d1zetc41fpdwem",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-translator-dev-161213-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
     },
     "categories": {
       "auth": {
