@@ -1,0 +1,13 @@
+{
+  "resourceName": "MobileTranslatorClientImages",
+  "policyUUID": "7f92e479",
+  "bucketName": "clients-images",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

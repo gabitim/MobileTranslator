@@ -24,5 +24,11 @@ export type AmplifyDependentResourcesAttributes = {
             "ApiName": "string",
             "ApiId": "string"
         }
+    },
+    "storage": {
+        "MobileTranslatorClientImages": {
+            "BucketName": "string",
+            "Region": "string"
+        }
     }
 }
