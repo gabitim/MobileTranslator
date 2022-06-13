@@ -82,8 +82,6 @@ const HomeScreen = () => {
     <>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
-        <Text>Home</Text>
-        <View style={styles.space} />
 
         <ActivityIndicator animating={loading} size="large" color="#000000" />
         <View style={styles.space} />
