@@ -231,8 +231,9 @@ def handler(event, context):
     # operation params
     obj_body = json.loads(event['body'])
     file_path = 'public/' + obj_body['filePath']
-    ocr_option = obj_body['ocrOption']
-    language = obj_body['language']
+    operation = obj_body['operation']
+    targetLanguage = obj_body['targetLanguage']
+    text = obj_body['text']
 
     # aws services clients
     translate_client = boto3.client('translate')
@@ -241,7 +242,7 @@ def handler(event, context):
     s3 = boto3.resource('s3')
   
     # AWS Textract option
-    if ocr_option == 'Textract':      
+    if operation == 'Textract':      
       # Process the file using the S3 object we just uploaded
       response = textract_client.detect_document_text(
         Document = {'S3Object': {'Bucket': constants.CLIENTS_IMAGES_BUCKET, 'Name': file_path}})
@@ -259,7 +260,7 @@ def handler(event, context):
       return constants.construct_handler_output(extracted_string)
      
     # My custom ocr  
-    elif ocr_option == 'ResNet':
+    elif operation == 'MyCustomOcr':
       image_folder = os.path.splitext(file_path)[0] + '/'
       
       textAreaPaths = detectTextArea(file_path, s3, constants.CLIENTS_IMAGES_BUCKET, image_folder)
@@ -280,8 +281,8 @@ def handler(event, context):
       return constants.construct_handler_output(extracted_string)
 
     # Translation
-    elif ocr_option == 'Translate':        
-      translated_output_string = translation(translate_client, text, language)
+    elif operation == 'Translate':        
+      translated_output_string = translation(translate_client, text, targetLanguage)
       print(translated_output_string)
 
       return constants.construct_handler_output(extracted_string)

@@ -11,8 +11,8 @@ const options = [
     value: 'Textract',
   },
   {
-    label: 'ResNet',
-    value: 'ResNet',
+    label: 'MyCustomOcr',
+    value: 'MyCustomOcr',
   },
 ];
 

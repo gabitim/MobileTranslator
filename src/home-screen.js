@@ -64,8 +64,9 @@ const HomeScreen = () => {
 
       const body = {
         filePath: filePath,
-        ocrOption: ocrOption,
-        language: language,
+        operation: ocrOption,
+        targetLanguage: language,
+        text: '-',
       };
       console.log(body);
 
