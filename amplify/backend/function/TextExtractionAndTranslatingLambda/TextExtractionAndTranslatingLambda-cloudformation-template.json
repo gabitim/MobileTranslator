@@ -69,7 +69,8 @@
             },
             "REGION": {
               "Ref": "AWS::Region"
-            }
+            },
+            "OCR_ENDPOINT_NAME": "tensorflow-inference-2022-07-03-09-58-48-110"
           }
         },
         "Role": {
@@ -78,9 +79,11 @@
             "Arn"
           ]
         },
-        "Runtime": "python3.8",
+        "MemorySize": 256,
+        "Runtime": "python3.6",
         "Layers": [
-          "arn:aws:lambda:us-east-1:230439540937:layer:opencv-layer:3"
+          "arn:aws:lambda:us-east-1:230439540937:layer:opencv-imutils-layer:1",
+          "arn:aws:lambda:us-east-1:668099181075:layer:AWSLambda-Python36-SciPy1x:115"
         ],
         "Timeout": 25
       }
