@@ -269,11 +269,15 @@ def handler(event, context):
       extracted_string = ''
       for idx, path in enumerate(textAreaPaths):
         print(path)
-        extracted_word = detectAndClassifyCharsFromText(idx, path, s3, image_folder, sm)
+        try:
+          extracted_word = detectAndClassifyCharsFromText(idx, path, s3, image_folder, sm)
 
-        extracted_string += f'{extracted_word} '
+          extracted_string += f'{extracted_word} '
 
-        print('current extracted string: ', extracted_string)
+          print('current extracted string: ', extracted_string)
+        except Exception as e:
+          print(str(e))
+          pass
 
       extracted_string = extracted_string.upper()
       print('final output: ', extracted_string)
@@ -287,5 +291,6 @@ def handler(event, context):
 
       return constants.construct_handler_output(translated_output_string)
   
-  except:
+  except Exception as e:
+    print(str(e))
     return constants.construct_handler_output(constants.DEFAULT_ERROR_MESSAGE)
