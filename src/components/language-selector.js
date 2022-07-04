@@ -5,7 +5,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {StyleSheet} from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 
-const languages = [
+export const languages = [
   {
     label: 'English',
     value: 'en',
@@ -39,7 +39,7 @@ const languages = [
 const LanguageSelector = ({setLanguage}) => {
   return (
     <SelectDropdown
-      defaultButtonText="Destination language"
+      defaultButtonText="Language"
       buttonStyle={styles.destinationLanguageButton}
       buttonTextStyle={styles.destinationLanguageButtonText}
       renderDropdownIcon={isOpened => {
@@ -47,6 +47,7 @@ const LanguageSelector = ({setLanguage}) => {
       }}
       dropdownIconPosition={'right'}
       data={languages}
+      defaultValue={languages[0]}
       onSelect={(selectedItem) => setLanguage(selectedItem.value)}
       buttonTextAfterSelection={(selectedItem) => selectedItem.label }
       rowTextForSelection={(item) => item.label}
@@ -56,12 +57,15 @@ const LanguageSelector = ({setLanguage}) => {
 
 const styles = StyleSheet.create({
   destinationLanguageButton: {
-    width: 220,
-    backgroundColor: '#0099ff',
+    borderRadius: 5,
+    width: 130,
+    height: 40,
+    backgroundColor: 'gray',
     alignSelf: 'center',
   },
   destinationLanguageButtonText: {
-    color: '#ffffff',
+    color: 'white',
+    fontSize: 14,
   },
 });
 

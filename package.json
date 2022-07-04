@@ -28,7 +28,7 @@
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^3.13.1",
     "react-native-select-dropdown": "^2.0.3",
-    "react-native-vector-icons": "^9.1.0"
+    "react-native-vector-icons": "^9.2.0"
   },
   "devDependencies": {
     "@babel/core": "7.17.10",

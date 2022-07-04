@@ -18,9 +18,9 @@ const App: () => React$Node = () => {
             name="Home"
             component={HomeScreen}
             options={({navigation}) => ({
-              title: 'Home',
+              title: 'My Translator',
               headerStyle: {
-                backgroundColor: '#ff9300',
+                backgroundColor: '#808080',
               },
               headerLeft: () => (
                 <View style={styles.logOutBtn}>

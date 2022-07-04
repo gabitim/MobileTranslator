@@ -5,14 +5,14 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {StyleSheet} from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 
-const options = [
+export const ocrOptions = [
   {
-    label: 'Textract',
-    value: 'Textract',
+    label: 'AWSTextract',
+    value: 'AWSTextract',
   },
   {
-    label: 'MyCustomOcr',
-    value: 'MyCustomOcr',
+    label: 'MyOcr',
+    value: 'MyOcr',
   },
 ];
 
@@ -26,7 +26,8 @@ const OcrSelector = ({setOcrOption}) => {
         return <FontAwesome name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#444'} size={18} />;
       }}
       dropdownIconPosition={'right'}
-      data={options}
+      data={ocrOptions}
+      defaultValue={ocrOptions[0]}
       onSelect={(selectedItem) => setOcrOption(selectedItem.value)}
       buttonTextAfterSelection={(selectedItem) => selectedItem.label }
       rowTextForSelection={(item) => item.label}
@@ -36,12 +37,15 @@ const OcrSelector = ({setOcrOption}) => {
 
 const styles = StyleSheet.create({
   button: {
-    width: 220,
-    backgroundColor: '#0099ff',
+    borderRadius: 5,
+    width: 130,
+    height: 40,
+    backgroundColor: 'gray',
     alignSelf: 'center',
   },
   buttonText: {
-    color: '#ffffff',
+    color: 'white',
+    fontSize: 14,
   },
 });
 

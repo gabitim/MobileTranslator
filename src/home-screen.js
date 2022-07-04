@@ -1,21 +1,22 @@
 /* eslint-disable prettier/prettier */
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import {
   ActivityIndicator,
-  Button,
-  SafeAreaView,
+  Keyboard,
   StatusBar,
   StyleSheet,
   Text,
+  TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {API, Auth, Storage} from 'aws-amplify';
 import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
 
 import ImageUploader from './components/image-uploader';
-import LanguageSelector from './components/language-selector';
-import OcrSelector from './components/ocr-selector';
+import LanguageSelector, {languages} from './components/language-selector';
+import OcrSelector, {ocrOptions} from './components/ocr-selector';
 
 const myAPI = 'api0a629dfb';
 const path = '/translate';
@@ -23,10 +24,26 @@ const path = '/translate';
 const HomeScreen = () => {
 
   const [photo, setPhoto] = useState(null);
-  const [language, setLanguage] = useState('');
-  const [ocrOption, setOcrOption] = useState('');
+  const [language, setLanguage] = useState(languages[0].value);
+  const [ocrOption, setOcrOption] = useState(ocrOptions[0].value);
   const [loading, setLoading] = useState(false);
-  const [output, setOutput] = useState('');
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  const [extractedText, setExtractedText] = useState('');
+  const [translateText, setTranslatedText] = useState('');
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+      setKeyboardVisible(true);
+    });
+    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardVisible(false);
+    });
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
 
   const handleGalleryPhoto = async () => {
     await launchImageLibrary({}, (response) => {
@@ -47,7 +64,7 @@ const HomeScreen = () => {
     });
   };
 
-  const handleUploadAndInitiate = async () => {
+  const handleExtract = async () => {
     setLoading(true);
 
     try {
@@ -73,7 +90,30 @@ const HomeScreen = () => {
       const res = await API.post(myAPI, path, {body: body});
       setLoading(false);
       console.log(res);
-      setOutput(res);
+      setExtractedText(res);
+    }
+    catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
+  const handleTranslate = async () => {
+    setLoading(true);
+
+    try {
+      const body = {
+        filePath: '-',
+        operation: 'Translate',
+        targetLanguage: language,
+        text: extractedText,
+      };
+      console.log(body);
+
+      const res = await API.post(myAPI, path, {body: body});
+      setLoading(false);
+      console.log(res);
+      setTranslatedText(res);
     }
     catch (error) {
       console.log(error);
@@ -84,37 +124,103 @@ const HomeScreen = () => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-
-        <ActivityIndicator animating={loading} size="large" color="#000000" />
-        <View style={styles.space} />
-
         <ImageUploader
           handleGalleryPhoto={handleGalleryPhoto}
           handleCameraPhoto={handleCameraPhoto}
           photo={photo}
         />
-        <View style={styles.space} />
 
-        <LanguageSelector setLanguage={setLanguage} />
-        <View style={styles.space} />
+        <TextInput
+          style={isKeyboardVisible ? styles.textInput(225) : styles.textInput(335)}
+          onChangeText={setExtractedText}
+          value={extractedText}
+          multiline={true}
+        />
 
-        <OcrSelector setOcrOption={setOcrOption} />
-        <View style={styles.space} />
+        <TextInput
+          style={styles.textInput(425)}
+          onChangeText={() => {}}
+          value={translateText}
+          multiline={true}
+          editable={false}
+        />
 
-        <Button title="Upload and initiate" onPress={handleUploadAndInitiate} />
-        <View style={styles.space} />
+        {!isKeyboardVisible &&
+        <>
+          <View style={styles.extractText}>
+            <OcrSelector setOcrOption={setOcrOption} />
+            <ActivityIndicator animating={loading} size="large" color="#a5d3f2" />
+            <TouchableOpacity
+              onPress={handleExtract}
+              style={styles.button}
+              disabled={loading}>
+              <Text style={loading ? styles.buttonText('white') : styles.buttonText('white')}>
+                Extract text
+              </Text>
+            </TouchableOpacity>
+          </View>
 
-        <Text>{output}</Text>
-      </SafeAreaView>
+          <View style={styles.translateText}>
+            <LanguageSelector setLanguage={setLanguage} />
+            <TouchableOpacity
+              onPress={handleTranslate}
+              style={styles.button}
+              disabled={loading || extractedText === '' ? true : false}>
+              <Text style={loading || extractedText === '' ? styles.buttonText('#c2c8cc') : styles.buttonText('white')}>
+                Translate text
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </>
+        }
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  space: {
-    width: 20,
-    height: 20,
+  extractText: {
+    position: 'absolute',
+    right: 30,
+    left: 30,
+    bottom: 55,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  translateText: {
+    position: 'absolute',
+    right: 30,
+    left: 30,
+    bottom: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  button: {
+    borderRadius: 5,
+    width: 130,
+    padding: 10,
+    backgroundColor: 'gray',
+  },
+  buttonText: (color) => {
+    return {
+      color: color,
+      textAlign: 'center',
+    };
+  },
+  textInput: (topValue) => {
+    return {
+      position: 'absolute',
+      alignSelf: 'center',
+      top: topValue,
+      borderRadius: 5,
+      borderWidth: 2,
+      borderColor: 'gray',
+      backgroundColor: 'white',
+      height: 80,
+      width: 340,
+      margin: 8,
+      padding: 10,
+      fontSize: 18,
+    };
   },
 });
 
