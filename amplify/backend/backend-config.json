@@ -49,13 +49,7 @@
       ]
     }
   },
-  "hosting": {
-    "amplifyhosting": {
-      "service": "amplifyhosting",
-      "providerPlugin": "awscloudformation",
-      "type": "manual"
-    }
-  },
+  "hosting": {},
   "storage": {
     "MobileTranslatorClientImages": {
       "service": "S3",

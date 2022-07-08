@@ -19,13 +19,7 @@
       "function": {
         "TextExtractionAndTranslatingLambda": {
           "deploymentBucketName": "amplify-translator-dev-161213-deployment",
-          "s3Key": "amplify-builds/TextExtractionAndTranslatingLambda-54372f6d34574a494e4b-build.zip"
-        }
-      },
-      "hosting": {
-        "amplifyhosting": {
-          "appId": "d1zetc41fpdwem",
-          "type": "manual"
+          "s3Key": "amplify-builds/TextExtractionAndTranslatingLambda-377161543931485a7473-build.zip"
         }
       }
     }

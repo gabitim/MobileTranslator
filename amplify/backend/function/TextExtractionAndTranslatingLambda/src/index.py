@@ -106,8 +106,14 @@ def detectTextArea(file_path, s3, bucket, image_folder):
 
   kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
   grad = cv2.morphologyEx(gray, cv2.MORPH_GRADIENT, kernel)
+  cv2.imwrite(f'/tmp/grad.jpg', grad)
+  s3.meta.client.upload_file('/tmp/grad.jpg', bucket, image_folder + 'grad.jpg')
+
 
   _, bw = cv2.threshold(grad, 0.0, 255.0, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+  cv2.imwrite(f'/tmp/bw.jpg', bw)
+  s3.meta.client.upload_file('/tmp/bw.jpg', bucket, image_folder + 'bw.jpg')
+
 
   kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (9, 1))
   connected = cv2.morphologyEx(bw, cv2.MORPH_CLOSE, kernel)
@@ -135,6 +141,7 @@ def detectTextArea(file_path, s3, bucket, image_folder):
     cv2.rectangle(image, (x, y), (x + w - 1, y + h - 1), (0, 255, 0), 2)
 
   cv2.imwrite(f"/tmp/detected.jpg", image)
+  s3.meta.client.upload_file('/tmp/detected.jpg', bucket, image_folder + 'detected.jpg')
 
   return textAreaPaths
 

@@ -18,7 +18,7 @@ import ImageUploader from './components/image-uploader';
 import LanguageSelector, {languages} from './components/language-selector';
 import OcrSelector, {ocrOptions} from './components/ocr-selector';
 
-const myAPI = 'api0a629dfb';
+const api = 'api0a629dfb';
 const path = '/translate';
 
 const HomeScreen = () => {
@@ -87,7 +87,7 @@ const HomeScreen = () => {
       };
       console.log(body);
 
-      const res = await API.post(myAPI, path, {body: body});
+      const res = await API.post(api, path, {body: body});
       setLoading(false);
       console.log(res);
       setExtractedText(res);
@@ -110,7 +110,7 @@ const HomeScreen = () => {
       };
       console.log(body);
 
-      const res = await API.post(myAPI, path, {body: body});
+      const res = await API.post(api, path, {body: body});
       setLoading(false);
       console.log(res);
       setTranslatedText(res);
@@ -142,7 +142,6 @@ const HomeScreen = () => {
           onChangeText={() => {}}
           value={translateText}
           multiline={true}
-          editable={false}
         />
 
         {!isKeyboardVisible &&
